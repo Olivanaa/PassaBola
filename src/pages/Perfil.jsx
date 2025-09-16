@@ -84,9 +84,9 @@ export default function Perfil() {
             console.error("Erro ao cancelar inscrição:", err)
         }
     }
-
+    
     return (
-        <main className="bg-gradient-to-r from-lilas/40 via-verde/10 to-lilas/20 min-h-screen p-4 md:p-10 flex justify-center items-start">
+        <main className="bg-gradient-to-r from-lilas/40 via-verde/10 to-lilas/20 px-4 py-8 md:p-10 flex justify-center items-start">
             <div className="w-full max-w-5xl bg-white shadow-2xl rounded-lg overflow-hidden flex flex-col">
                 <div className="bg-gradient-to-r from-lilas/20 to-verde/10 p-6 md:p-8">
                     <div className="flex flex-col md:flex-row items-center md:items-start gap-6">

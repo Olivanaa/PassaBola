@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { MapContainer, TileLayer, Marker } from "react-leaflet"
 import "leaflet/dist/leaflet.css"
-import { Funnel, X } from "lucide-react"
+import { Funnel, X, MapPin } from "lucide-react"
 import L from "leaflet"
 import LocalPopUp from "../components/LocalPopUp"
 import UserLocation from "../components/UserLocation"
@@ -101,6 +101,7 @@ export default function Mapa() {
     const [faixaEtaria, setFaixaEtaria] = useState("Todas")
     const [custo, setCusto] = useState("Todos")
     const [nivel, setNivel] = useState("Todos")
+    const [showLegend, setShowLegend] = useState(false)
 
     useEffect(() => {
         async function fetchLocais() {
@@ -138,7 +139,7 @@ export default function Mapa() {
 
     return (
         <main className="relative w-full h-screen">
-            <div className="absolute top-4 left-15 z-50 flex bg-white shadow-md rounded-lg overflow-hidden w-80">
+            <div className="absolute top-4 left-12 right-4 z-50 flex bg-white shadow-md rounded-lg overflow-hidden w-80">
                 <input
                     type="text"
                     placeholder="Buscar por locais, eventos..."
@@ -148,79 +149,99 @@ export default function Mapa() {
                 />
                 <button
                     onClick={() => setShowFilters(!showFilters)}
-                    className="px-3 bg-lilas text-white hover:bg-roxo transition"
+                    className="px-3 bg-lilas text-white hover:bg-roxo transition flex items-center"
                 >
                     {showFilters ? <X className="w-5 h-5" /> : <Funnel className="w-5 h-5" />}
                 </button>
             </div>
+            <button
+                onClick={() => setShowLegend(!showLegend)}
+                className="absolute bottom-4 right-4 z-50 bg-white p-3 rounded-full shadow-lg md:hidden"
+            >
+                <MapPin className="w-5 h-5 text-lilas" />
+            </button>
             {showFilters && (
-                <div className="absolute top-20 left-15 z-50 w-72 bg-white shadow-xl rounded-xl p-5 flex flex-col gap-4 transition-all duration-200">
-                    <div className="flex items-center justify-between mb-2 border-b pb-2">
+                <div className="absolute inset-0 z-50 bg-white p-4 sm:overflow-y-auto md:w-72 md:top-20 md:left-12 md:shadow-xl md:flex md:flex-col md:gap-4 md:transition-all md:duration-200 md:h-[410px] md:rounded-md">
+                    <div className="flex items-center justify-between mb-4 md:border-b pb-2">
                         <h2 className="text-lg font-bold text-gray-800">Filtros</h2>
-                        <button
-                            onClick={limparFiltros}
-                            className="text-sm text-gray-500 hover:text-gray-700 underline"
-                        >
-                            Limpar
-                        </button>
+                        <div className="flex gap-2">
+                            <button
+                                onClick={limparFiltros}
+                                className="text-sm text-gray-500 hover:text-gray-700 underline"
+                            >
+                                Limpar
+                            </button>
+                            <button
+                                onClick={() => setShowFilters(false)}
+                                className="text-lilas hover:text-roxo md:hidden"
+                            >
+                                <X className="w-5 h-5" />
+                            </button>
+                        </div>
                     </div>
-                    <div className="flex flex-col">
-                        <label className="mb-1 text-sm font-medium text-gray-700">Tipo</label>
-                        <select
-                            value={tipo}
-                            onChange={(e) => setTipo(e.target.value)}
-                            className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 transition"
-                        >
-                            <option value="Todos">Todos</option>
-                            {tipos.map((t) => (
-                                <option key={t} value={t}>
-                                    {t}
-                                </option>
-                            ))}
-                        </select>
+                    <div className="space-y-4">
+                        <div className="flex flex-col">
+                            <label className="mb-1 text-sm font-medium text-gray-700">Tipo</label>
+                            <select
+                                value={tipo}
+                                onChange={(e) => setTipo(e.target.value)}
+                                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lilas transition"
+                            >
+                                <option value="Todos">Todos</option>
+                                {tipos.map((t) => (
+                                    <option key={t} value={t}>{t}</option>
+                                ))}
+                            </select>
+                        </div>
+
+                        <div className="flex flex-col">
+                            <label className="mb-1 text-sm font-medium text-gray-700">Faixa Etária</label>
+                            <select
+                                value={faixaEtaria}
+                                onChange={(e) => setFaixaEtaria(e.target.value)}
+                                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lilas transition"
+                            >
+                                <option value="Todas">Todas</option>
+                                {faixasEtaria.map((f) => (
+                                    <option key={f} value={f}>{f}</option>
+                                ))}
+                            </select>
+                        </div>
+
+                        <div className="flex flex-col">
+                            <label className="mb-1 text-sm font-medium text-gray-700">Custo</label>
+                            <select
+                                value={custo}
+                                onChange={(e) => setCusto(e.target.value)}
+                                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lilas transition"
+                            >
+                                <option>Todos</option>
+                                <option>Gratuito</option>
+                                <option>Pago</option>
+                            </select>
+                        </div>
+
+                        <div className="flex flex-col">
+                            <label className="mb-1 text-sm font-medium text-gray-700">Nível</label>
+                            <select
+                                value={nivel}
+                                onChange={(e) => setNivel(e.target.value)}
+                                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lilas transition"
+                            >
+                                <option value="Todos">Todos</option>
+                                {niveis.map((n) => (
+                                    <option key={n} value={n}>{n}</option>
+                                ))}
+                            </select>
+                        </div>
                     </div>
-                    <div className="flex flex-col">
-                        <label className="mb-1 text-sm font-medium text-gray-700">Faixa Etária</label>
-                        <select
-                            value={faixaEtaria}
-                            onChange={(e) => setFaixaEtaria(e.target.value)}
-                            className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 transition"
-                        >
-                            <option value="Todas">Todas</option>
-                            {faixasEtaria.map((f) => (
-                                <option key={f} value={f}>
-                                    {f}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    <div className="flex flex-col">
-                        <label className="mb-1 text-sm font-medium text-gray-700">Custo</label>
-                        <select
-                            value={custo}
-                            onChange={(e) => setCusto(e.target.value)}
-                            className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 transition"
-                        >
-                            <option>Todos</option>
-                            <option>Gratuito</option>
-                            <option>Pago</option>
-                        </select>
-                    </div>
-                    <div className="flex flex-col">
-                        <label className="mb-1 text-sm font-medium text-gray-700">Nível</label>
-                        <select
-                            value={nivel}
-                            onChange={(e) => setNivel(e.target.value)}
-                            className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 transition"
-                        >
-                            <option value="Todos">Todos</option>
-                            {niveis.map((n) => (
-                                <option key={n} value={n}>
-                                    {n}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
+
+                    <button
+                        onClick={() => setShowFilters(false)}
+                        className="w-full bg-lilas text-white py-3 rounded-lg mt-6 hover:bg-roxo transition md:hidden"
+                    >
+                        Aplicar Filtros
+                    </button>
                 </div>
             )}
             <MapContainer
@@ -247,7 +268,7 @@ export default function Mapa() {
                     </Marker>
                 ))}
             </MapContainer>
-            <div className="absolute bottom-20 right-10 bg-white p-5 rounded-lg shadow-md z-50">
+            <div className="absolute bottom-20 right-10 bg-white p-5 rounded-lg shadow-md z-50 hidden md:block">
                 <h3 className="font-bold mb-2">Legenda</h3>
                 <div className="flex items-center gap-2 mb-1">
                     <div className="w-4 h-4 bg-[#A263E6] rounded-full"></div>
@@ -270,6 +291,33 @@ export default function Mapa() {
                     <span>Academia</span>
                 </div>
             </div>
+            {showLegend && (
+                <div className="absolute bottom-16 right-4 z-50 bg-white p-4 rounded-lg shadow-md md:hidden">
+                    <h3 className="font-bold mb-2 text-sm">Legenda</h3>
+                    <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                            <div className="w-3 h-3 bg-[#A263E6] rounded-full"></div>
+                            <span className="text-xs">Evento</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <div className="w-3 h-3 bg-[#639AE6] rounded-full"></div>
+                            <span className="text-xs">Quadra</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <div className="w-3 h-3 bg-[#63E6BE] rounded-full"></div>
+                            <span className="text-xs">Escolinha</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <div className="w-3 h-3 bg-[#EF8962] rounded-full"></div>
+                            <span className="text-xs">Clube</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <div className="w-3 h-3 bg-[#EF62C7] rounded-full"></div>
+                            <span className="text-xs">Academia</span>
+                        </div>
+                    </div>
+                </div>
+            )}
         </main>
     )
 }

@@ -12,7 +12,6 @@ export default function Footer() {
                         src={logo}
                         className="h-44 w-auto"
                     />
-                    <span className="text-white font-semibold text-lg">FutFem</span>
                 </div>
                 <div className="w-full border-t border-roxo/10" />
                 <div className="w-full flex flex-col md:flex-row md:items-center md:justify-between gap-6">
