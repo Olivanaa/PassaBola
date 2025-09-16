@@ -1,3 +1,5 @@
+import { Navigate } from "react-router-dom"
+
 export const isAuthenticated = () => {
     return localStorage.getItem("token") !== null
 }
