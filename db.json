@@ -28,7 +28,7 @@
       "nome": "Pamela Oliveira",
       "nascimento": "2000-05-14",
       "idade": 25,
-      "telefone": "11999999999",
+      "telefone": "1199999999",
       "email": "pam@example.com",
       "senha": "123",
       "posicao": "Meio-campo",
@@ -43,16 +43,7 @@
         "cidade": "Santo André",
         "estado": "SP"
       },
-      "inscricoes": [
-        {
-          "eventoId": "1",
-          "nomeEvento": "Encontro Passa Bola SP",
-          "dataEvento": "2025-09-20",
-          "local": "Arena Pacaembu",
-          "status": "Confirmada",
-          "dataInscricao": "2025-09-16"
-        }
-      ],
+      "inscricoes": [],
       "documentos": []
     },
     {
@@ -120,18 +111,8 @@
       "vagas": 49,
       "ocupadas": 1,
       "descricao": "Encontro do Passa Bola pra uma noite de futebol e resenha",
-      "inscritosHistorico": [
-        {
-          "data": "2025-09-16",
-          "total": 1
-        }
-      ],
-      "inscritos": [
-        {
-          "usuarioId": "2",
-          "status": "Confirmada"
-        }
-      ]
+      "inscritosHistorico": [],
+      "inscritos": []
     },
     {
       "id": "2",
