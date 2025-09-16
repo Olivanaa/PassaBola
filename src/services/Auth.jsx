@@ -15,6 +15,12 @@ export const logout = () => {
     window.location.href = "/"
 }
 
+export const fetchLoggedUser = async (userId) => {
+    const response = await fetch(`http://localhost:3000/usuarios/${userId}`)
+    if (!response.ok) throw new Error("Erro ao buscar usuário")
+    return await response.json()
+}
+
 export default function PrivateRoute({ children }) {
     if (!isAuthenticated()) {
         return <Navigate to="/login" replace />
