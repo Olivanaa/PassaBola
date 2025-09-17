@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { MapPin, Calendar, User, Star, Cake, Mail, Phone, Edit } from "lucide-react"
 import avatar from "../assets/avatar.png"
 import { formatDate, formatTelefone } from "../utils/DataFormato"
-import { getLoggedUser, fetchLoggedUser } from "../services/Auth"
+import { getLoggedUser, fetchLoggedUser, logout } from "../services/Auth"
 import { useNavigate } from "react-router-dom"
 
 export default function Perfil() {
@@ -84,7 +84,7 @@ export default function Perfil() {
             console.error("Erro ao cancelar inscrição:", err)
         }
     }
-    
+
     return (
         <main className="bg-gradient-to-r from-lilas/40 via-verde/10 to-lilas/20 px-4 py-8 md:p-10 flex justify-center items-start">
             <div className="w-full max-w-5xl bg-white shadow-2xl rounded-lg overflow-hidden flex flex-col">
@@ -119,9 +119,14 @@ export default function Perfil() {
                                     <Phone className="w-5 h-5 mr-2" /> {formatTelefone(usuario.telefone)}
                                 </span>
                             </div>
-                            <div className="flex justify-center md:justify-end">
+                            <div className="flex justify-center md:justify-end gap-2">
                                 <button className="bg-roxo/10 text-roxo hover:bg-roxo/20 transition px-4 py-2 rounded-lg flex items-center">
                                     <Edit className="w-4 h-4 mr-2" /> Editar Perfil
+                                </button>
+                                <button
+                                    onClick={logout}
+                                    className="bg-roxo text-white hover:bg-lilas transition px-4 py-2 rounded-lg flex items-center">
+                                    Logout
                                 </button>
                             </div>
                         </div>
@@ -183,10 +188,10 @@ export default function Perfil() {
                         <div className="text-center py-10 bg-gray-50 rounded-lg">
                             <Calendar className="w-12 h-12 text-gray-400 mx-auto mb-3" />
                             <p className="text-gray-500">Nenhuma inscrição em eventos.</p>
-                            <button 
+                            <button
                                 onClick={() => navigate("/evento")}
                                 className="mt-4 bg-roxo text-white px-4 py-2 rounded-lg hover:bg-lilas transition">
-                                    Explorar Eventos
+                                Explorar Eventos
                             </button>
                         </div>
                     )}
