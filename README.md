@@ -85,7 +85,8 @@ A aplicação utiliza **JSON Server** como backend simulado. A seguir, os princi
 1. Clone o repositório:
 
 ```bash
-
+git clone https://github.com/Olivanaa/FutFemMVP.git
+cd FutFemMVP
 ```
 
 2. Instale as dependencias:
