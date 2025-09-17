@@ -43,6 +43,19 @@ export default function Cadastro() {
 
     const [erro, setErro] = useState("")
 
+    const calcularIdade = (dataNascimento) => {
+        const hoje = new Date()
+        const nascimento = new Date(dataNascimento)
+        let idade = hoje.getFullYear() - nascimento.getFullYear()
+        const mes = hoje.getMonth() - nascimento.getMonth()
+
+        if (mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())) {
+            idade--
+        }
+        return idade
+    }
+
+
     const handleRegister = async (e) => {
         e.preventDefault();
         if (
@@ -297,11 +310,11 @@ export default function Cadastro() {
                                     ))}
                                 </select>
                             </div>
-                          <div className="relative flex flex-col focus-within:text-gray-900">
+                            <div className="relative flex flex-col focus-within:text-gray-900">
                                 <label className="text-sm font-medium mb-1">
                                     Email
                                 </label>
-                                <Mail className="w-5 h-5 absolute left-3 top-9 text-gray-400"  />
+                                <Mail className="w-5 h-5 absolute left-3 top-9 text-gray-400" />
                                 <input
                                     type="email"
                                     placeholder="Digite seu email"
@@ -310,11 +323,11 @@ export default function Cadastro() {
                                     className="pl-10 pr-4 py-2 w-full border rounded-xl focus:outline-none focus:ring-2 focus:ring-verde focus:border-verde"
                                 />
                             </div>
-                           <div className="relative flex flex-col focus-within:text-gray-900">
+                            <div className="relative flex flex-col focus-within:text-gray-900">
                                 <label className="text-sm font-medium mb-1">
                                     Senha
                                 </label>
-                                <Lock className="w-5 h-5 absolute left-3 top-9 text-gray-400"  />
+                                <Lock className="w-5 h-5 absolute left-3 top-9 text-gray-400" />
                                 <input
                                     type="password"
                                     placeholder="Digite uma senha"
